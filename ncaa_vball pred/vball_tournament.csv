@@ -1,0 +1,57 @@
+﻿GameNo,ID,Bracket,Date,Day,Time (PST),TR1,Team 1,TR2,Team 2,Where,TV Coverage
+3,r1-FLA-1,TL,2-Dec,THU,1:30pm,,Miami,,South Alabama,Florida,ESPN+
+23,r1-PUR-1,TR,2-Dec,THU,1:30pm,,Marquette,,Dayton,Purdue,ESPN+
+31,r1-TEX-1,BR,2-Dec,THU,2:00pm,,San Diego,,Rice,Texas,ESPN+
+10,r1-BAY-1,BL,2-Dec,THU,2:30pm,,Northern Colo,,Washington St,Baylor,ESPN+
+19,r1-CRE-1,TR,2-Dec,THU,2:30pm,,Oregon,,Kansas,Creighton,ESPN+
+4,r1-FLA-2,TL,2-Dec,THU,4:00pm,,Florida A&M,16,Florida,Florida,ESPN+
+24,r1-PUR-2,TR,2-Dec,THU,4:00pm,,Illinois St,,Purdue,Purdue,ESPN+
+9,r1-BAY-1,BL,2-Dec,THU,5:00pm,5,Baylor,,A&M Corpus Christi,Baylor,ESPN+
+20,r1-CRE-2,TR,2-Dec,THU,5:00pm,,Ole Miss,14,Creighton,Creighton,ESPN+
+32,r1-TEX-2,BR,2-Dec,THU,5:00pm,,Sacret Heart,2,Texas,Texas,Big10 Network
+2,r1-LOU-2,TL,3-Dec,FRI,1:00pm,,Ball State,,Michigan,Louisville,ESPN+
+18,r1-PIT-2,TR,3-Dec,FRI,1:00pm,,Towson,,Penn St,Pittsburgh,ESPN+
+7,r1-GAT-1,TL,3-Dec,FRI,1:30pm,,Western Ky,,South Carolina,Georgia Tech,ESPN+
+6,r1-OHS-2,TL,3-Dec,FRI,2:00pm,,North Carolina,,Tennessee,Ohio St,ESPN+
+26,r1-KEN-2,BR,3-Dec,FRI,2:00pm,,West Virginia,,Illinois,Kentucky,ESPN+
+36,r2-PUR-1,TR,3-Dec,FRI,2:00pm,,Dayton,,Purdue,Purdue,ESPN+
+11,r1-MIN-1,BL,3-Dec,FRI,2:30pm,,Stanford,,Iowa St,Minnesota,ESPN+
+15,r1-WIS-1,BL,3-Dec,FRI,2:30pm,,Texas Tech,,FGCU,Wisconsin,ESPN+
+27,r1-NEB-1,BR,3-Dec,FRI,2:30pm,,Florida St,,Kansas St,Nebraska,ESPN+
+22,r1-BYU-2,TR,3-Dec,FRI,3:00pm,,Utah Valley,,Utah,BYU,ESPN+
+1,r1-LOU-1,TL,3-Dec,FRI,4:00pm,1,Louisville,,UIC,Louisville,ESPN+
+5,r1-OHS-1,TL,3-Dec,FRI,4:00pm,9,Ohio St,,Howard,Ohio St,ESPN+
+8,r1-GAT-2,TL,3-Dec,FRI,4:00pm,,The Citadel,8,Georgia Tech,Georgia Tech,ESPN+
+17,r1-PIT-1,TR,3-Dec,FRI,4:00pm,3,Pittsburgh,,UMBC,Pittsburgh,ESPN+
+33,r2-FLA-1,TL,3-Dec,FRI,4:00pm,,Miami,,Florida,Florida,ESPN+
+14,r1-UCL-2,BL,3-Dec,FRI,4:30pm,,Pepperdine,,UCF,UCLA,ESPN+
+25,r1-KEN-1,BR,3-Dec,FRI,4:30pm,7,Kentucky,,Southeast Mo St,Kentucky,ESPN+
+30,r1-WAS-2,BR,3-Dec,FRI,4:30pm,,Hawaii,,Mississippi St,Washington,ESPN+
+12,r1-MIN-2,BL,3-Dec,FRI,5:00pm,,South Dakota,12,Minnesota,Minnesota,ESPN+
+16,r1-WIS-2,BL,3-Dec,FRI,5:00pm,,Colgate,4,Wisconsin,Wisconsin,ESPN+
+28,r1-NEB-2,BR,3-Dec,FRI,5:00pm,,Campbell,10,Nebraska,Nebraska,ESPN+
+34,r2-BAY-1,BL,3-Dec,FRI,5:00pm,,Baylor,,Washington St,Baylor,ESPN+
+35,r2-CRE-1,TR,3-Dec,FRI,5:00pm,,Kansas,,Creighton,Creighton,ESPN+
+21,r1-BYU-1,TR,3-Dec,FRI,6:00pm,11,BYU,,Boise St,BYU,ESPN+
+37,r2-TEX-1,BR,3-Dec,FRI,6:00pm,,Rice,,Texas,Texas,Big10 Network
+13,r1-UCL-1,BL,3-Dec,FRI,7:00pm,13,UCLA,,Fairfield,UCLA,ESPN+
+29,r1-WAS-1,BR,3-Dec,FRI,7:00pm,15,Washington,,Brown,Washington,ESPN+
+46,R2-KEN-1,BR,4-Dec,SAT,2:00pm,,Kentucky,,Illinois,Kentucky,ESPN+
+38,r2-LOU-1,TL,4-Dec,SAT,3:00pm,,Louisville,,Ball St,Louisville,ESPN+
+39,r2-OHS-1,TL,4-Dec,SAT,3:00pm,,Ohio St,,Tennessee,Ohio St,ESPN+
+40,r2-GAT-1,TL,4-Dec,SAT,4:00pm,,Western Ky,,Georgia Tech,Georgia Tech,ESPN+
+43,r2-WIS-1,BL,4-Dec,SAT,4:00pm,,FGCU,,Wisconsin,Wisconsin,ESPN+
+44,R2-KEN-1,TR,4-Dec,SAT,4:00pm,,Pittsburgh,,Penn St,Pittsburgh,ESPN+
+41,r2-MIN-1,BL,4-Dec,SAT,5:00pm,,Stanford,,Minnesota,Minnesota,ESPN+
+47,R2-NEB-1,BR,4-Dec,SAT,5:00pm,,Florida St,,Nebraska,Nebraska,ESPN+
+45,R2-BYU-1,TR,4-Dec,SAT,6:00pm,,BYU,,Utah,BYU,ESPN+
+42,r2-UCL-1,BL,4-Dec,SAT,7:00pm,,UCLA,,UCF,UCLA,ESPN+
+48,R2-WAS-1,BR,4-Dec,SAT,7:00pm,,Washington,,Hawaii,Washington,ESPN+
+54,,TR,9-Dec,THU,8:00am,11,BYU,6,Purdue,Pittsburgh,ESPN+
+49,,TL,9-Dec,THU,10:00am,16,Florida,1,Louisville,Louisville,ESPN+
+53,,TR,9-Dec,THU,10:00am,,Kansas,3,Pittsburgh,Pittsburgh,ESPN+
+50,,TL,9-Dec,THU,12:00pm,9,Ohio St,8,Georgia Tech,Louisville,ESPN+
+51,,BL,9-Dec,THU,12:00pm,12,Minnesota,5,Baylor,Wisconsin,ESPN+
+52,,BL,9-Dec,THU,2:00pm,13,UCLA,4,Wisconsin,Wisconsin,ESPN+
+56,,BR,9-Dec,THU,4:30pm,15,Washington,2,Texas,Texas,ESPN+
+55,,BR,9-Dec,THU,6:30pm,,Illinois,10,Nebraska,Texas,ESPN+
