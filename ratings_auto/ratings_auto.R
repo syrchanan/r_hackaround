@@ -6,6 +6,8 @@ library(janitor)
 
 # Scraping ####
 
+info <- read_lines("C:\\Users\\cdawg\\git_repos\\r_hackaround\\ratings_auto\\emails_passwords.txt")
+
 target <- Sys.Date()-2
 week_day <- tolower(wday(target, T, F))
 abbr_month <- tolower(month(target, T, T))
@@ -21,6 +23,7 @@ ratings_td <- ratings[[2]]
 
 scores <- read_html(url) %>% html_nodes('.entry-wrap .entry-content.content p') %>% html_text()
 
+scores <- str_replace_all(scores, "Prime", "\nPrime")
 
 # Formatting in DT ####
 
@@ -50,7 +53,7 @@ ratings_25_54 %>%
       rows = c(2,4,6,8)
     )
   ) %>%
-  gtsave("total_viewers.png")
+  gtsave("C:\\Users\\cdawg\\git_repos\\r_hackaround\\ratings_auto\\25_54.png")
 
 ratings_td %>%
   clean_names() %>%
@@ -78,19 +81,18 @@ ratings_td %>%
       rows = c(2,4,6,8)
     )
   ) %>%
-  gtsave("total_viewers.png")
+  gtsave("C:\\Users\\cdawg\\git_repos\\r_hackaround\\ratings_auto\\total_viewers.png")
 
 # Send Email ####
 
+#need to have Java x64 downloaded before installing rJava so that the architecture of R and Java match
 #install.packages("rJava")
 library(rJava)
 #install.packages("mailR")
 library(mailR)
 
-subject_line <- paste0("Ratings for: ", wday(target, T, T), ", ", month(target, T, T), " ", wday(target), ", ", year(target))
+subject_line <- paste0("Ratings for: ", wday(target, T, T), ", ", month(target, T, T), " ", day(target), ", ", year(target))
 body_scores <- paste0(scores[1],"\n",scores[2],"\n\n",scores[3],"\n",scores[4])
-
-info <- read_lines("emails_passwords.txt")
 
 sender <- info[1]
 recipients <- c(info[2])
@@ -98,7 +100,8 @@ send.mail(from = sender,
            to = recipients,
            subject = subject_line,
            body = body_scores,
-           attach.files = c("25_54.png", "total_viewers.png"),
+           attach.files = c("C:\\Users\\cdawg\\git_repos\\r_hackaround\\ratings_auto\\25_54.png",
+                            "C:\\Users\\cdawg\\git_repos\\r_hackaround\\ratings_auto\\total_viewers.png"),
            smtp = list(host.name = "smtp.gmail.com", port = 465,
                        user.name = info[3],
                        passwd = info[4], ssl = TRUE),
