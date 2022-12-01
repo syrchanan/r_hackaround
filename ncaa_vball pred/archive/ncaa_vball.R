@@ -1,64 +1,54 @@
-pacman::p_load("tidyverse", "rvest", "rpart",
-               "rattle", "rpart.plot", "RColorBrewer",
-               "Cairo", "CORElearn", "magrittr",
-               "forcats", "dplyr", "stringr",
-               "e1071", "mlr", "caret",
-               "naivebayes", "janitor", "neuralnet",
-               "xgboost", "nnet", "scales",
-               "knn", "DiagrammeR", "gt",
-               "webshot2")
-
-# library(tidyverse)
-# library(rvest)
-# library(rpart)
-# library(rattle)
-# library(rpart.plot)
-# library(RColorBrewer)
-# library(Cairo)
-# library(CORElearn)
-# library(magrittr)
-# library(forcats)
-# library(dplyr)
-# library(stringr)
-# library(e1071)
-# library(mlr)
-# library(caret)
-# library(naivebayes)
-# library(janitor)
-# library(neuralnet)
-# library(xgboost)
-# library(nnet)
-# library(scales)
-# library(knn)
-# library(DiagrammeR)
-# library(gt)
-# library(webshot)
+library(tidyverse)
+library(rvest)
+library(rpart)
+library(rattle)
+library(rpart.plot)
+library(RColorBrewer)
+library(Cairo)
+library(CORElearn)
+library(magrittr)
+library(forcats)
+library(dplyr)
+library(stringr)
+library(e1071)
+library(mlr)
+library(caret)
+library(naivebayes)
+library(janitor)
+library(neuralnet)
+library(xgboost)
+library(nnet)
+library(scales)
+library(knn)
+library(DiagrammeR)
+library(gt)
+library(webshot)
 
 # Scraping ####
-url <- "https://www.ncaa.com/scoreboard/volleyball-women/d1/2022/08/26/all-conf"
-current_url <- "https://www.ncaa.com/brackets/volleyball-women/d1/2022"
-conference_data <- "https://en.wikipedia.org/wiki/2022_NCAA_Division_I_women%27s_volleyball_tournament#Qualifying_teams"
+url <- "https://www.ncaa.com/scoreboard/volleyball-women/d1/2021/08/20/all-conf"
+current_url <- "https://www.ncaa.com/brackets/volleyball-women/d1/2021"
+conference_data <- "https://en.wikipedia.org/wiki/2021_NCAA_Division_I_Women%27s_Volleyball_Tournament#Qualifying_teams"
 
 ## Conf Lookup ####
 conferences <- read_html(conference_data) %>% html_nodes(xpath = '//*[@id="mw-content-text"]/div[1]/table[3]/tbody/tr[1]/td[1]/table') %>% html_table(fill = TRUE)
-top_left_reg <- conferences[[1]]
+louisville_reg <- conferences[[1]]
 
 conferences <- read_html(conference_data) %>% html_nodes(xpath = '//*[@id="mw-content-text"]/div[1]/table[3]/tbody/tr[1]/td[2]/table') %>% html_table(fill = TRUE)
-bottom_left_reg <- conferences[[1]]
+madison_reg <- conferences[[1]]
 
 conferences <- read_html(conference_data) %>% html_nodes(xpath = '//*[@id="mw-content-text"]/div[1]/table[3]/tbody/tr[2]/td[1]/table') %>% html_table(fill = TRUE)
-top_right_reg <- conferences[[1]]
+pittsburgh_reg <- conferences[[1]]
 
 conferences <- read_html(conference_data) %>% html_nodes(xpath = '//*[@id="mw-content-text"]/div[1]/table[3]/tbody/tr[2]/td[2]/table') %>% html_table(fill = TRUE)
-bottom_right_reg <- conferences[[1]]
+austin_reg <- conferences[[1]]
 
-top_left_reg$region <- "texas"
-bottom_left_reg$region <- "stanford"
-top_right_reg$region <- "wisconsin"
-bottom_right_reg$region <- "louisville"
+louisville_reg$region <- "louisville"
+madison_reg$region <- "madison"
+pittsburgh_reg$region <- "pittsburgh"
+austin_reg$region <- "austin"
 
-top_left_reg %>% 
-  bind_rows(bottom_left_reg, top_right_reg, bottom_right_reg) -> bracket
+louisville_reg %>% 
+  bind_rows(madison_reg, pittsburgh_reg, austin_reg) -> bracket
 
 ## Current Teams in tournament ####
 current <- read_html(current_url) %>% html_nodes('.round-1 .name') %>% html_text()
@@ -78,7 +68,7 @@ get_results <- function() {
     if (month == "09" | month == "11") {
       for (day in 1:30) {
         try({
-          url <- paste0("https://www.ncaa.com/scoreboard/volleyball-women/d1/2022/",month,"/",day,"/all-conf")
+          url <- paste0("https://www.ncaa.com/scoreboard/volleyball-women/d1/2021/",month,"/",day,"/all-conf")
           webpage <- read_html(url)
           
           teams_html <- html_nodes(webpage,'.gamePod-game-team-name') %>% html_text()
@@ -96,7 +86,7 @@ get_results <- function() {
     } else if (month == "08" | month == "10") {
       for (day in 1:31) {
         try({
-          url <- paste0("https://www.ncaa.com/scoreboard/volleyball-women/d1/2022/",month,"/",day,"/all-conf")
+          url <- paste0("https://www.ncaa.com/scoreboard/volleyball-women/d1/2021/",month,"/",day,"/all-conf")
           webpage <- read_html(url)
           
           teams_html <- html_nodes(webpage,'.gamePod-game-team-name') %>% html_text()
@@ -128,18 +118,10 @@ teams_list <- str_replace_all(pattern = "St.$", replacement = "State", string = 
 teams_list <- str_replace_all(pattern = " (FL)", replacement = "", string = teams_list)
 teams_list <- str_replace_all(pattern = "Ky.", replacement = "Kentucky", string = teams_list)
 teams_list <- str_replace_all(pattern = "FGCU", replacement = "Florida Gulf Coast", string = teams_list)
-teams_list <- str_replace_all(pattern = "Colo\\.", replacement = "Colorado", string = teams_list)
+teams_list <- str_replace_all(pattern = "Colo.", replacement = "Colorado", string = teams_list)
 teams_list <- str_replace_all(pattern = "ii", replacement = "i'i", string = teams_list)
 teams_list <- str_replace_all(pattern = "Mo.", replacement = "Missouri", string = teams_list)
 teams_list <- str_replace_all(pattern = "Texas A&M", replacement = "Texas A&M–CC", string = teams_list)
-teams_list <- str_replace_all(pattern = "LMU \\(CA\\)", replacement = "Loyola Marymount", string = teams_list)
-teams_list <- str_replace_all(pattern = "Hawaiʻi", replacement = "Hawai'i", string = teams_list)
-teams_list <- str_replace_all(pattern = "Southeastern La\\.", replacement = "Southeastern Louisiana", string = teams_list)
-teams_list <- str_replace_all(pattern = "NIU", replacement = "Northern Iowa", string = teams_list)
-teams_list <- str_replace_all(pattern = "TBA", replacement = "Stephen F. Austin", string = teams_list)
-
-#have to manually replace Hawaii
-bracket$School[24] <- "Hawai'i"
 
 bracket$School[!bracket$School %in% teams_list]
 
@@ -195,7 +177,7 @@ ml_ready %>%
 # train.index = sample(n,floor(0.75*n))
 # train_set <- nb_data[train.index,]
 # test_set <- nb_data[-train.index,]
-# test_set %>%
+# test_set %>% 
 #   select(-win) -> test_no_answer
 
 nb_data_na <- ml_ready %>%
@@ -352,8 +334,7 @@ accuracy_xgb <- (sum((xgb.pred$label==xgb.pred$real))/nrow(xgb.pred))
 ## K-NN ####
 
 knn_data <- nb_data %>% 
-  mutate(across(.cols = 1:3, .fns = as.numeric)) %>% 
-  replace_na(list("conference" = 0))
+  mutate(across(.cols = 1:3, .fns = as.numeric))
 
 n = nrow(knn_data)
 train.index = sample(n,floor(0.75*n))
@@ -392,7 +373,7 @@ class_accuracy %>%
     style = list(cell_fill(color = "#D0CFCF")),
     locations = cells_body(rows = c(2,4,6,8))
   ) %>% 
-  gtsave("accuracy_table.png", path = "C:/Users/cdawg/git_repos/r_hackaround/ncaa_vball pred/")
+  gtsave("accuracy_table.png")
 
 # Time to predict ####
 
@@ -405,15 +386,10 @@ results <- function(round = 1) {
   round_1_teams <- str_replace_all(pattern = " (FL)", replacement = "", string = round_1_teams)
   round_1_teams <- str_replace_all(pattern = "Ky.", replacement = "Kentucky", string = round_1_teams)
   round_1_teams <- str_replace_all(pattern = "FGCU", replacement = "Florida Gulf Coast", string = round_1_teams)
-  round_1_teams <- str_replace_all(pattern = "Colo\\.", replacement = "Colorado", string = round_1_teams)
+  round_1_teams <- str_replace_all(pattern = "Colo.", replacement = "Colorado", string = round_1_teams)
   round_1_teams <- str_replace_all(pattern = "ii", replacement = "i'i", string = round_1_teams)
   round_1_teams <- str_replace_all(pattern = "Mo.", replacement = "Missouri", string = round_1_teams)
   round_1_teams <- str_replace_all(pattern = "Texas A&M", replacement = "Texas A&M–CC", string = round_1_teams)
-  round_1_teams <- str_replace_all(pattern = "LMU \\(CA\\)", replacement = "Loyola Marymount", string = round_1_teams)
-  round_1_teams <- str_replace_all(pattern = "Hawaiʻi", replacement = "Hawai'i", string = round_1_teams)
-  round_1_teams <- str_replace_all(pattern = "Southeastern La\\.", replacement = "Southeastern Louisiana", string = round_1_teams)
-  round_1_teams <- str_replace_all(pattern = "NIU", replacement = "Northern Iowa", string = round_1_teams)
-  round_1_teams <- str_replace_all(pattern = "TBA", replacement = "Stephen F. Austin", string = round_1_teams)
   
   tournament <- tibble(game_id = 1:(length(round_1_teams)/2))
   
@@ -432,7 +408,7 @@ results <- function(round = 1) {
     left_join(bracket, by = c("team" = "School")) %>% 
     clean_names() %>% 
     select(-game_id, -seed, -rpi, -berth_type, -record, -region) %>% 
-    replace_na(list(conference = "Ohio Valley")) %>% 
+    replace(is.na(.), "unkown_conf") %>% 
     mutate(team = factor(team, levels = levels(train_set$team)),
            opp = factor(opp, levels = levels(train_set$opp)),
            conference = factor(conference, levels = levels(train_set$conference))) -> clean_tournament
@@ -456,15 +432,13 @@ clean_tournament$win <- pred
 clean_tournament <- tibble(clean_tournament)
 
 clean_tournament %>% 
+  dplyr::slice(1:5, 7:32, 38) %>% 
   mutate(advance = case_when(
     win == 1 ~ team,
     win == 0 ~ opp
-  )) %>%
-  dplyr::slice(1:2, 35:40, 9:21, 54, 23:32) %>%
+  )) %>% dplyr::slice(1:5, 32, 6:31) %>% 
   select(advance) %>% 
   as_vector() -> advance
-
-advance[28] <- "Oregon"
 
 master <- tibble(game_id = 1:(length(advance)/2))
 
@@ -495,12 +469,10 @@ round_2$win <- pred
 round_2 %>% 
   mutate(advance = case_when(
     win == 1 ~ team,
-    win == 0 ~ opp)) %>%
+    win == 0 ~ opp)) %>% 
   select(advance) %>% 
   dplyr::slice(1:16) %>% 
   as_vector() -> advance
-
-advance[8] <- "Pittsburgh"
 
 master <- tibble(game_id = 1:(length(advance)/2))
 
@@ -533,7 +505,7 @@ round_3 %>%
     win == 1 ~ team,
     win == 0 ~ opp)) %>% 
   select(advance) %>% 
-  dplyr::slice(1:3, 12, 5:8) %>% 
+  dplyr::slice(1:8) %>% 
   as_vector() -> advance
 
 master <- tibble(game_id = 1:(length(advance)/2))
@@ -565,7 +537,7 @@ round_4$win <- pred
 round_4 %>% 
   mutate(advance = case_when(
     win == 1 ~ team,
-    win == 0 ~ opp)) %>%
+    win == 0 ~ opp)) %>% 
   select(advance) %>% 
   dplyr::slice(1:4) %>% 
   as_vector() -> advance
@@ -598,12 +570,14 @@ pred <- predict(svm_lin_real, round_5, type="class")
 
 round_5$win <- pred
 
+round_5$win[1] <- 1
+
 round_5 %>% 
   mutate(advance = case_when(
     win == 1 ~ team,
     win == 0 ~ opp)) %>% 
   select(advance) %>% 
-  dplyr::slice(3:4) %>% 
+  dplyr::slice(1:2) %>% 
   as_vector() -> advance
 
 master <- tibble(game_id = 1:(length(advance)/2))
