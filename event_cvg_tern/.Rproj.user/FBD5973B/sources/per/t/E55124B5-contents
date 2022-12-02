@@ -4,7 +4,7 @@ pacman::p_load("tidyverse", "lubridate", "rvest",
                "stringdist", "ggtern", "janitor",
                "ggrepel")
 
-date <- ymd("2022-11-16")
+date <- ymd("2022-12-06")
 
 #6a-6a, numbered in order
 #6a = 0, 7a = 1, 8a = 2, 9a = 3, 10a = 4, 11a = 5, 12n = 6, 1p = 7, 2p = 8,
