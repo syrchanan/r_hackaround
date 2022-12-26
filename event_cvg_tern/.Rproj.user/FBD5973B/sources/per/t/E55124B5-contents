@@ -11,8 +11,8 @@ date <- ymd("2022-12-06")
 #3p = 9, 4p = 10, 5p = 11, 6p = 12, 7p = 13, 8p = 14, 9p = 15, 10p = 16, 
 #11p = 17, 12a = 18, 1a = 19, 2a = 20, 3a = 21, 4a = 22, 5a = 23, ALL DAY = 24
 
-start_hour <- 11
-end_hour <- 18
+start_hour <- 13
+end_hour <- 21
 
 get_links <- function(date = Sys.Date()-3, user_ngram = 1) {
   
@@ -98,7 +98,7 @@ ngram_results %>%
          ngram = str_to_lower(ngram),
          ngram = lemmatize_words(ngram)) -> clean_results
 
-word_choice <- "trump"
+word_choice <- "election"
 
 word_choice %>% 
   str_replace_all("[[:punct:]]*[[:digit:]]*", "") %>% 
@@ -124,7 +124,7 @@ sim_rating %>%
   group_by(ngram) %>%
   summarise(total = sum(count)) %>% 
   arrange(desc(total)) %>% 
-  slice(1:200) -> top_200_ngrams
+  slice(1:250) -> top_200_ngrams
 
 sim_rating %>% 
   filter(guid %in% prog_lookup) %>%
@@ -132,7 +132,7 @@ sim_rating %>%
   group_by(network, ngram) %>% 
   summarise(subtotal = sum(count)) %>%
   arrange(desc(subtotal), .by_group = T) %>% 
-  top_n(20, subtotal) -> top_ngrams
+  top_n(30, subtotal) -> top_ngrams
   
 
 sim_rating %>% 
@@ -144,7 +144,7 @@ sim_rating %>%
   left_join(top_200_ngrams, by = c("ngram" = "ngram")) %>%
   mutate(pct_net = subtotal/total) %>% 
   pivot_wider(ngram, names_from = network, values_from = pct_net) %>%
-  replace_na(replace = list(CNN = 0, FOXNEWS = 0, MSNBC = 0)) %>%
+  replace_na(replace = list(CNN = 0.01, FOXNEWS = 0.01, MSNBC = 0.01)) %>%
   clean_names() -> prep_tern_plot
 
 prep_tern_plot %>% 
