@@ -1,0 +1,26 @@
+{
+    "id": "61D2BFBF",
+    "path": "C:/Users/cdawg/git_repos/r_hackaround/tidymodels_practice/titanic/titantic_practice.R",
+    "project_path": "titanic/titantic_practice.R",
+    "type": "r_source",
+    "hash": "4011104409",
+    "contents": "",
+    "dirty": false,
+    "created": 1673929653727.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "84,0",
+        "scrollLine": "54"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1673934750,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1673934750265,
+    "read_only": false,
+    "read_only_alternatives": []
+}
