@@ -4,7 +4,7 @@ pacman::p_load("tidyverse", "lubridate", "rvest",
                "stringdist", "ggtern", "janitor",
                "ggrepel")
 
-date <- ymd("2022-12-06")
+date <- ymd("2023-08-03")
 
 #6a-6a, numbered in order
 #6a = 0, 7a = 1, 8a = 2, 9a = 3, 10a = 4, 11a = 5, 12n = 6, 1p = 7, 2p = 8,
@@ -48,16 +48,16 @@ get_links <- function(date = Sys.Date()-3, user_ngram = 1) {
       mutate(hour = str_sub(timecode, 1, 2),
              min = str_sub(timecode, 3, 4)) %>% 
       mutate(hour = case_when(
-        min == "59" ~ as.numeric(hour) - 4,
-        T ~ as.numeric(hour) - 5
+        min == "59" ~ as.numeric(hour) - 9,
+        T ~ as.numeric(hour) - 10
       )) %>% 
       mutate(min = case_when(
         min == "59" ~ 0,
         T ~ as.numeric(min)
       )) %>% 
       filter(case_when(
-        part == 1 ~ hour > 5,
-        part == 2 ~ hour < 6
+        part == 1 ~ hour >= 0,
+        part == 2 ~ hour < 0
       )) -> temp_table_part
     
     return(temp_table_part)
@@ -67,9 +67,9 @@ get_links <- function(date = Sys.Date()-3, user_ngram = 1) {
   part2 <- get_part(date+1, 2)
   
   part1 %>% 
-    bind_rows(part2) %>% 
-    group_by(nets) %>% 
-    mutate(hour = hour - 6) %>% 
+    bind_rows(part2) %>%
+    group_by(nets) %>%
+    #mutate(hour = hour - 6) %>% 
     mutate(hour = case_when(
       hour < 0 ~ hour + 24,
       T ~ hour
@@ -98,7 +98,7 @@ ngram_results %>%
          ngram = str_to_lower(ngram),
          ngram = lemmatize_words(ngram)) -> clean_results
 
-word_choice <- "election"
+word_choice <- "trump"
 
 word_choice %>% 
   str_replace_all("[[:punct:]]*[[:digit:]]*", "") %>% 
@@ -134,7 +134,6 @@ sim_rating %>%
   arrange(desc(subtotal), .by_group = T) %>% 
   top_n(30, subtotal) -> top_ngrams
   
-
 sim_rating %>% 
   filter(guid %in% prog_lookup) %>%
   filter(ngram %in% top_ngrams$ngram) %>% 
@@ -158,6 +157,6 @@ prep_tern_plot %>%
   ylab("FXNC")+
   zlab("MSNBC")
 
-ggsave("raw_tern_plot.svg", plot = last_plot(), 
+ggsave(paste0("./raw/raw_tern_plot_", date, ".svg"), plot = last_plot(), 
        device = "svg", width = 10, height = 10, units = "in")
 
